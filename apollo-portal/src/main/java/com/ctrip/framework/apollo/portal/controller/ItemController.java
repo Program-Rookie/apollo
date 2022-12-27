@@ -73,6 +73,9 @@ public class ItemController {
     this.namespaceService = namespaceService;
   }
 
+  /**
+   * 批量变更配置项
+   */
   @PreAuthorize(value = "@permissionValidator.hasModifyNamespacePermission(#appId, #namespaceName, #env)")
   @PutMapping(value = "/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items", consumes = {
       "application/json"})

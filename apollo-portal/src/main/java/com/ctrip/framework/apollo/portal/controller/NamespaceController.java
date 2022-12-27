@@ -141,12 +141,12 @@ public class NamespaceController {
   @PostMapping("/apps/{appId}/namespaces")
   public ResponseEntity<Void> createNamespace(@PathVariable String appId,
                                               @RequestBody List<NamespaceCreationModel> models) {
-
+    // 关联命名空间
     checkModel(!CollectionUtils.isEmpty(models));
 
     String namespaceName = models.get(0).getNamespace().getNamespaceName();
     String operator = userInfoHolder.getUser().getUserId();
-
+    // 初始化命名空间修改/发布角色
     roleInitializationService.initNamespaceRoles(appId, namespaceName, operator);
     roleInitializationService.initNamespaceEnvRoles(appId, namespaceName, operator);
 
@@ -164,7 +164,7 @@ public class NamespaceController {
                         namespace.getNamespaceName()), e);
       }
     }
-
+    // 分配修改/发布权限给当前管理员
     namespaceService.assignNamespaceRoleToOperator(appId, namespaceName,userInfoHolder.getUser().getUserId());
 
     return ResponseEntity.ok().build();
@@ -212,9 +212,9 @@ public class NamespaceController {
       throw new BadRequestException(String.format("Invalid Namespace format: %s",
           InputValidator.INVALID_CLUSTER_NAMESPACE_MESSAGE + " & " + InputValidator.INVALID_NAMESPACE_NAMESPACE_MESSAGE));
     }
-
+    // 保存 AppNamespace 对象到数据库
     AppNamespace createdAppNamespace = appNamespaceService.createAppNamespaceInLocal(appNamespace, appendNamespacePrefix);
-
+    // 允许管理员创建私有命名空间 或 公开命名空间 赋予权限
     if (portalConfig.canAppAdminCreatePrivateNamespace() || createdAppNamespace.isPublic()) {
       namespaceService.assignNamespaceRoleToOperator(appId, appNamespace.getName(),
           userInfoHolder.getUser().getUserId());

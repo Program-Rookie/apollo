@@ -42,18 +42,32 @@ public class ReleaseHistory extends BaseEntity {
   @Column(name = "NamespaceName", nullable = false)
   private String namespaceName;
 
+  /**
+   * 分支 TODO ？？
+   */
   @Column(name = "BranchName", nullable = false)
   private String branchName;
 
+  /**
+   * release编号
+   */
   @Column(name = "ReleaseId")
   private long releaseId;
-
+  /**
+   * 上一次release编号
+   */
   @Column(name = "PreviousReleaseId")
   private long previousReleaseId;
 
+  /**
+   * 操作类型 {@link com.ctrip.framework.apollo.common.constants.ReleaseOperation}
+   */
   @Column(name = "Operation")
   private int operation;
 
+  /**
+   * 操作 Context
+   */
   @Column(name = "OperationContext", nullable = false)
   private String operationContext;
 

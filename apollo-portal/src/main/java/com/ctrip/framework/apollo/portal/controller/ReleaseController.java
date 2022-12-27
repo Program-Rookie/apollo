@@ -69,6 +69,9 @@ public class ReleaseController {
     this.userInfoHolder = userInfoHolder;
   }
 
+  /**
+   * 发布
+   */
   @PreAuthorize(value = "@permissionValidator.hasReleaseNamespacePermission(#appId, #namespaceName, #env)")
   @PostMapping(value = "/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/releases")
   public ReleaseDTO createRelease(@PathVariable String appId,
@@ -79,12 +82,13 @@ public class ReleaseController {
     model.setClusterName(clusterName);
     model.setNamespaceName(namespaceName);
 
+    // 若是紧急发布，但是当前环境未允许该操作，抛出 BadRequestException 异常
     if (model.isEmergencyPublish() && !portalConfig.isEmergencyPublishAllowed(Env.valueOf(env))) {
       throw new BadRequestException(String.format("Env: %s is not supported emergency publish now", env));
     }
-
+    // admin发布配置
     ReleaseDTO createdRelease = releaseService.publish(model);
-
+    // 创建 ConfigPublishEvent 对象
     ConfigPublishEvent event = ConfigPublishEvent.instance();
     event.withAppId(appId)
         .withCluster(clusterName)
@@ -92,7 +96,7 @@ public class ReleaseController {
         .withReleaseId(createdRelease.getId())
         .setNormalPublishEvent(true)
         .setEnv(Env.valueOf(env));
-
+    // 发布 ConfigPublishEvent事件
     publisher.publishEvent(event);
 
     return createdRelease;

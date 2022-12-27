@@ -37,9 +37,15 @@ public class Release extends BaseEntity {
   @Column(name = "ReleaseKey", nullable = false)
   private String releaseKey;
 
+  /**
+   * 标题
+   */
   @Column(name = "Name", nullable = false)
   private String name;
 
+  /**
+   * 应用编号
+   */
   @Column(name = "AppId", nullable = false)
   private String appId;
 
@@ -49,13 +55,22 @@ public class Release extends BaseEntity {
   @Column(name = "NamespaceName", nullable = false)
   private String namespaceName;
 
+  /**
+   * 本次发布的全部配置json
+   */
   @Column(name = "Configurations", nullable = false)
   @Lob
   private String configurations;
 
+  /**
+   * 备注
+   */
   @Column(name = "Comment", nullable = false)
   private String comment;
 
+  /**
+   * 是否被回滚
+   */
   @Column(name = "IsAbandoned", columnDefinition = "Bit default '0'")
   private boolean isAbandoned;
 

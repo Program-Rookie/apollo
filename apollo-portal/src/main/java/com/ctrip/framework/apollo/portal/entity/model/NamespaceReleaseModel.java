@@ -26,6 +26,9 @@ public class NamespaceReleaseModel implements Verifiable {
   private String env;
   private String clusterName;
   private String namespaceName;
+  /**
+   * release name
+   */
   private String releaseTitle;
   private String releaseComment;
   private String releasedBy;

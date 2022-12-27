@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 消息发送器
  * @author Jason Song(song_s@ctrip.com)
  */
 @Component
@@ -104,6 +105,7 @@ public class DatabaseMessageSender implements MessageSender {
       return;
     }
     boolean hasMore = true;
+    // 清除掉最新release之前的所有releasemessage
     while (hasMore && !Thread.currentThread().isInterrupted()) {
       List<ReleaseMessage> messages = releaseMessageRepository.findFirst100ByMessageAndIdLessThanOrderByIdAsc(
           releaseMessage.getMessage(), releaseMessage.getId());

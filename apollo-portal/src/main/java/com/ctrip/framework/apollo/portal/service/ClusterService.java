@@ -43,6 +43,7 @@ public class ClusterService {
   }
 
   public ClusterDTO createCluster(Env env, ClusterDTO cluster) {
+    // 远程调用校验cluster唯一性
     if (!clusterAPI.isClusterUnique(cluster.getAppId(), env, cluster.getName())) {
       throw new BadRequestException(String.format("cluster %s already exists.", cluster.getName()));
     }

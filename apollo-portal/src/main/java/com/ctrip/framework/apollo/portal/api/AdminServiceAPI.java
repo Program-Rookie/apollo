@@ -52,6 +52,7 @@ public class AdminServiceAPI {
     }
 
     public AppDTO createApp(Env env, AppDTO app) {
+      // AppController.create
       return restTemplate.post(env, "apps", app, AppDTO.class);
     }
 

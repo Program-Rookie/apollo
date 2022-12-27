@@ -193,13 +193,14 @@ public class ReleaseService {
                          String operator, boolean isEmergencyPublish) {
 
     checkLock(namespace, isEmergencyPublish, operator);
-
+    // 有效配置集合
     Map<String, String> operateNamespaceItems = getNamespaceItems(namespace);
 
     Namespace parentNamespace = namespaceService.findParentNamespace(namespace);
 
     //branch release
     if (parentNamespace != null) {
+      // 灰度发布
       return publishBranchNamespace(parentNamespace, namespace, operateNamespaceItems,
                                     releaseName, releaseComment, operator, isEmergencyPublish);
     }
@@ -272,6 +273,7 @@ public class ReleaseService {
 
   private void checkLock(Namespace namespace, boolean isEmergencyPublish, String operator) {
     if (!isEmergencyPublish) {
+      // 非紧急发布，锁定人和当前操作人相同，抛出异常
       NamespaceLock lock = namespaceLockService.findLock(namespace.getId());
       if (lock != null && lock.getDataChangeCreatedBy().equals(operator)) {
         throw new BadRequestException("Config can not be published by yourself.");

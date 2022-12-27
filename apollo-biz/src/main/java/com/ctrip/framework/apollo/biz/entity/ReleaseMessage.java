@@ -39,14 +39,21 @@ public class ReleaseMessage {
   @Column(name = "Id")
   private long id;
 
+  /**
+   * appId+cluster+namespace
+   */
   @Column(name = "Message", nullable = false)
   private String message;
 
+  /**
+   * 最后更新时间
+   */
   @Column(name = "DataChange_LastTime")
   private Date dataChangeLastModifiedTime;
 
   @PrePersist
   protected void prePersist() {
+    // 若保存时，未设置该字段，进行补全
     if (this.dataChangeLastModifiedTime == null) {
       dataChangeLastModifiedTime = new Date();
     }

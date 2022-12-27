@@ -118,16 +118,20 @@ public class NamespaceUnlockAspect {
   }
 
   boolean isModified(Namespace namespace) {
+    // 获得当前 Namespace 的最后有效的 Release 对象
     Release release = releaseService.findLatestActiveRelease(namespace);
+    // 获得当前 Namespace 的 Item 集合
     List<Item> items = itemService.findItemsWithoutOrdered(namespace.getId());
 
+    // 如果无 Release 对象，判断是否有普通的 Item 配置项。若有，则代表修改过。
     if (release == null) {
       return hasNormalItems(items);
     }
-
+    // 获得 Release 的配置 Map(每次发布的完整配置 Map)
     Map<String, String> releasedConfiguration = GSON.fromJson(release.getConfigurations(), GsonType.CONFIG);
+    // 获得当前 Namespace 的配置 Map
     Map<String, String> configurationFromItems = generateConfigurationFromItems(namespace, items);
-
+    // 对比两个 配置 Map ，判断是否相等。
     MapDifference<String, String> difference = Maps.difference(releasedConfiguration, configurationFromItems);
 
     return !difference.areEqual();
@@ -136,6 +140,7 @@ public class NamespaceUnlockAspect {
 
   private boolean hasNormalItems(List<Item> items) {
     for (Item item : items) {
+      // 注释、空行item的key为空
       if (!StringUtils.isEmpty(item.getKey())) {
         return true;
       }
@@ -147,12 +152,14 @@ public class NamespaceUnlockAspect {
   private Map<String, String> generateConfigurationFromItems(Namespace namespace, List<Item> namespaceItems) {
 
     Map<String, String> configurationFromItems = Maps.newHashMap();
-
+    // 获得父 Namespace 对象
     Namespace parentNamespace = namespaceService.findParentNamespace(namespace);
     //parent namespace
     if (parentNamespace == null) {
+      // 若无父 Namespace ，使用自己的配置
       generateMapFromItems(namespaceItems, configurationFromItems);
     } else {//child namespace
+      // 若有父 Namespace ，说明是灰度发布，合并父 Namespace 的配置 + 自己的配置项
       Release parentRelease = releaseService.findLatestActiveRelease(parentNamespace);
       if (parentRelease != null) {
         configurationFromItems = GSON.fromJson(parentRelease.getConfigurations(), GsonType.CONFIG);
@@ -167,6 +174,7 @@ public class NamespaceUnlockAspect {
     for (Item item : items) {
       String key = item.getKey();
       if (StringUtils.isBlank(key)) {
+        // 跳过空行和注释
         continue;
       }
       configurationFromItems.put(key, item.getValue());

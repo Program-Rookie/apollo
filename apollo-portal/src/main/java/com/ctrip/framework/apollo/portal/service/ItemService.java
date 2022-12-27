@@ -98,15 +98,16 @@ public class ItemService {
 
     String configText = model.getConfigText();
 
+    // 获得对应格式的 ConfigTextResolver 对象
     ConfigTextResolver resolver =
         model.getFormat() == ConfigFileFormat.Properties ? propertyResolver : fileTextResolver;
-
+    // 查询已有配置 解析成 ItemChangeSets
     ItemChangeSets changeSets = resolver.resolve(namespaceId, configText,
         itemAPI.findItems(appId, env, clusterName, namespaceName));
     if (changeSets.isEmpty()) {
       return;
     }
-
+    // 调用 Admin Service API ，批量更新 Item 们
     changeSets.setDataChangeLastModifiedBy(userInfoHolder.getUser().getUserId());
     updateItems(appId, env, clusterName, namespaceName, changeSets);
 

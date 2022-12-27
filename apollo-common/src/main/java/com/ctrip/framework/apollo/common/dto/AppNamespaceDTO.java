@@ -27,7 +27,7 @@ public class AppNamespaceDTO extends BaseDTO{
   private String comment;
 
   private String format;
-
+  // 是否公用
   private boolean isPublic = false;
 
   public long getId() {

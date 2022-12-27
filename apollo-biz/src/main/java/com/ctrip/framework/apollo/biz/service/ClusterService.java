@@ -80,9 +80,9 @@ public class ClusterService {
 
   @Transactional
   public Cluster saveWithInstanceOfAppNamespaces(Cluster entity) {
-
+    // 保存 Cluster 对象
     Cluster savedCluster = saveWithoutInstanceOfAppNamespaces(entity);
-
+    // 创建 Cluster 的 Namespace 们
     namespaceService.instanceOfAppNamespaces(savedCluster.getAppId(), savedCluster.getName(),
                                              savedCluster.getDataChangeCreatedBy());
 

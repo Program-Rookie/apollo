@@ -41,6 +41,7 @@ import com.ctrip.framework.apollo.tracer.spi.Transaction;
 import com.google.common.collect.Lists;
 
 /**
+ *
  * @author Jason Song(song_s@ctrip.com)
  */
 public class ReleaseMessageScanner implements InitializingBean {
@@ -54,6 +55,9 @@ public class ReleaseMessageScanner implements InitializingBean {
   private final List<ReleaseMessageListener> listeners;
   private final ScheduledExecutorService executorService;
   private final Map<Long, Integer> missingReleaseMessages; // missing release message id => age counter
+  /**
+   * config db release message中最大的id
+   */
   private long maxIdScanned;
 
   public ReleaseMessageScanner() {
@@ -67,6 +71,9 @@ public class ReleaseMessageScanner implements InitializingBean {
   public void afterPropertiesSet() throws Exception {
     databaseScanInterval = bizConfig.releaseMessageScanIntervalInMilli();
     maxIdScanned = loadLargestMessageId();
+    // 创建并执行一个在给定初始延迟后首次启用的定期操作，
+    // 随后，在每一次执行终止和下一次执行开始之间都存在给定的延迟。
+    // 如果任务的任一执行遇到异常，就会取消后续执行。否则，只能通过执行程序的取消或终止方法来终止该任务。
     executorService.scheduleWithFixedDelay(() -> {
       Transaction transaction = Tracer.newTransaction("Apollo.ReleaseMessageScanner", "scanMessage");
       try {

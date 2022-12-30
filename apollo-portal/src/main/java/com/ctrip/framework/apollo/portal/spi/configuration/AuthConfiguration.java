@@ -89,6 +89,7 @@ public class AuthConfiguration {
       "/health"};
 
   /**
+   * 携程内部实现，接入sso并实现用户搜索、查询接口
    * spring.profiles.active = ctrip
    */
   @Configuration
@@ -230,6 +231,7 @@ public class AuthConfiguration {
   }
 
   /**
+   * Spring Security认证
    * spring.profiles.active = auth
    */
   @Configuration
@@ -299,7 +301,9 @@ public class AuthConfiguration {
   @Order(99)
   @Profile("auth")
   @Configuration
+  // 禁用默认security
   @EnableWebSecurity
+  // 启用注解支持
   @EnableGlobalMethodSecurity(prePostEnabled = true)
   static class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
@@ -307,21 +311,28 @@ public class AuthConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+      // 关闭csrf防护
       http.csrf().disable();
+      // 仅允许相同 origin 访问
       http.headers().frameOptions().sameOrigin();
       http.authorizeRequests()
           .antMatchers(BY_PASS_URLS).permitAll()
+          // 访问其他路径需要登录user
           .antMatchers("/**").hasAnyRole(USER_ROLE);
+      // 登录页
       http.formLogin().loginPage("/signin").defaultSuccessUrl("/", true).permitAll().failureUrl("/signin?#/error").and()
           .httpBasic();
+      // 登出
       http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).clearAuthentication(true)
           .logoutSuccessUrl("/signin?#/logout");
+      // 未身份校验，跳转到登录页
       http.exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/signin"));
     }
 
   }
 
   /**
+   * TODO ?
    * spring.profiles.active = ldap
    */
   @Configuration
@@ -457,6 +468,9 @@ public class AuthConfiguration {
     }
   }
 
+  /**
+   * TODO ?
+   */
   @Profile("oidc")
   @EnableConfigurationProperties({OAuth2ClientProperties.class, OAuth2ResourceServerProperties.class})
   @Configuration
@@ -549,6 +563,7 @@ public class AuthConfiguration {
   }
 
   /**
+   * 默认认证 默认一个apollo账户
    * default profile
    */
   @Configuration

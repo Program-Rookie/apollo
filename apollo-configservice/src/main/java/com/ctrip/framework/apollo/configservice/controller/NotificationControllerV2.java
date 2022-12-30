@@ -314,6 +314,9 @@ public class NotificationControllerV2 implements ReleaseMessageListener {
     logger.debug("Notification completed");
   }
 
+  /**
+   * 从release message中获得namespace
+   */
   private static final Function<String, String> retrieveNamespaceFromReleaseMessage =
       releaseMessage -> {
         if (Strings.isNullOrEmpty(releaseMessage)) {

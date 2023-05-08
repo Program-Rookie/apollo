@@ -36,6 +36,7 @@ public class ServiceBootstrap {
   }
 
   public static <S> Iterator<S> loadAll(Class<S> clazz) {
+    // ServiceLoader jdk6新特性，实现SPI（Service Provider Interface）服务发现机制
     ServiceLoader<S> loader = ServiceLoader.load(clazz);
 
     return loader.iterator();

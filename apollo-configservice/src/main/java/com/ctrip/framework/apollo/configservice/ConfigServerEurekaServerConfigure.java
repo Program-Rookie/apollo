@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Start Eureka Server annotations according to configuration
- *
+ * config注册进入eureka
  * @author Zhiqiang Lin(linzhiqiang0514@163.com)
  */
 @Configuration

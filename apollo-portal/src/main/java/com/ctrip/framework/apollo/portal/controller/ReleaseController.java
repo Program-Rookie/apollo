@@ -156,7 +156,7 @@ public class ReleaseController {
 
     return releaseService.findAllReleases(appId, Env.valueOf(env), clusterName, namespaceName, page, size);
   }
-
+  // 查询待发布的更改
   @GetMapping(value = "/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active")
   public List<ReleaseDTO> findActiveReleases(@PathVariable String appId,
                                              @PathVariable String env,

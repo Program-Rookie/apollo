@@ -46,7 +46,7 @@ public class FavoriteController {
   }
 
 
-  @GetMapping("/favorites")
+  @GetMapping("/favorites")// 查收藏
   public List<Favorite> findFavorites(@RequestParam(value = "userId", required = false) String userId,
                                       @RequestParam(value = "appId", required = false) String appId,
                                       Pageable page) {

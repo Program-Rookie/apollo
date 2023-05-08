@@ -84,6 +84,7 @@ public abstract class RefreshableConfig {
             logger.error("Refresh configs failed.", t);
             Tracer.logError("Refresh configs failed.", t);
           }
+          // 60S刷新一次
         }, CONFIG_REFRESH_INTERVAL, CONFIG_REFRESH_INTERVAL, TimeUnit.SECONDS);
   }
 

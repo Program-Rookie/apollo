@@ -69,6 +69,7 @@ public class UserInfoController {
 
   }
 
+  // index.html 查个人信息
   @GetMapping("/user")
   public UserInfo getCurrentUserName() {
     return userInfoHolder.getUser();

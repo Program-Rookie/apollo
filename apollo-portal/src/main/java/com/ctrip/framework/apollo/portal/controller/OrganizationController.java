@@ -17,6 +17,8 @@
 package com.ctrip.framework.apollo.portal.controller;
 
 
+import com.ctrip.framework.apollo.portal.annotation.Api;
+import com.ctrip.framework.apollo.portal.annotation.ApiOperation;
 import com.ctrip.framework.apollo.portal.component.config.PortalConfig;
 import com.ctrip.framework.apollo.portal.entity.vo.Organization;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,7 @@ public class OrganizationController {
   }
 
 
+  @ApiOperation("部门下拉列表")
   @RequestMapping
   public List<Organization> loadOrganization() {
     return portalConfig.organizations();

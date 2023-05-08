@@ -28,6 +28,10 @@ public class ApolloInjector {
   private static volatile Injector s_injector;
   private static final Object lock = new Object();
 
+  /**
+   * 双重校验锁
+   * @return
+   */
   private static Injector getInjector() {
     if (s_injector == null) {
       synchronized (lock) {

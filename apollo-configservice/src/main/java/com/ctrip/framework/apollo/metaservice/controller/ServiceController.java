@@ -37,6 +37,7 @@ public class ServiceController {
 
   /**
    * This method always return an empty list as meta service is not used at all
+   * 没用
    */
   @Deprecated
   @RequestMapping("/meta")

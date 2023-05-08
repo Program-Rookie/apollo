@@ -89,7 +89,7 @@ public class ItemController {
 
     configService.updateConfigItemByText(model);
   }
-
+  // 新增配置
   @PreAuthorize(value = "@permissionValidator.hasModifyNamespacePermission(#appId, #namespaceName, #env)")
   @PostMapping("/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/item")
   public ItemDTO createItem(@PathVariable String appId, @PathVariable String env,

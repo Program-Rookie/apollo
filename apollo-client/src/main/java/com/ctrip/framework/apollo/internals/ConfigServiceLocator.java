@@ -201,6 +201,7 @@ public class ConfigServiceLocator {
       Transaction transaction = Tracer.newTransaction("Apollo.MetaService", "getConfigService");
       transaction.addData("Url", url);
       try {
+        // meta service 接口查apollo config service
         HttpResponse<List<ServiceDTO>> response = m_httpClient.doGet(request, m_responseType);
         transaction.setStatus(Transaction.SUCCESS);
         List<ServiceDTO> services = response.getBody();

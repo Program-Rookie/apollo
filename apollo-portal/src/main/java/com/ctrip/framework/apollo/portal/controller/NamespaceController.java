@@ -100,7 +100,7 @@ public class NamespaceController {
     return appNamespaceService.findPublicAppNamespaces();
   }
 
-  @GetMapping("/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces")
+  @GetMapping("/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces")//查环境集群下命名空间
   public List<NamespaceBO> findNamespaces(@PathVariable String appId, @PathVariable String env,
                                           @PathVariable String clusterName) {
 
@@ -114,7 +114,7 @@ public class NamespaceController {
 
     return namespaceBOs;
   }
-
+  // 加载namespace配置
   @GetMapping("/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName:.+}")
   public NamespaceBO findNamespace(@PathVariable String appId, @PathVariable String env,
                                    @PathVariable String clusterName, @PathVariable String namespaceName) {
@@ -232,7 +232,7 @@ public class NamespaceController {
    *  default -> true   (default cluster has not published namespace)
    *  customCluster -> false (customCluster cluster's all namespaces had published)
    */
-  @GetMapping("/apps/{appId}/namespaces/publish_info")
+  @GetMapping("/apps/{appId}/namespaces/publish_info")// 公共命名空间信息
   public Map<String, Map<String, Boolean>> getNamespacesPublishInfo(@PathVariable String appId) {
     return namespaceService.getNamespacesPublishInfo(appId);
   }

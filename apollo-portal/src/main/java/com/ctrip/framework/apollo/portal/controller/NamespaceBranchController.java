@@ -61,7 +61,7 @@ public class NamespaceBranchController {
     this.publisher = publisher;
     this.portalConfig = portalConfig;
   }
-
+  // 分支？
   @GetMapping("/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/branches")
   public NamespaceBO findBranch(@PathVariable String appId,
                                 @PathVariable String env,

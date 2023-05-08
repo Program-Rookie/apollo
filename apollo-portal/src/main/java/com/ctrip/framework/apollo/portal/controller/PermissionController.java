@@ -79,7 +79,7 @@ public class PermissionController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/apps/{appId}/permissions/{permissionType}")
+  @GetMapping("/apps/{appId}/permissions/{permissionType}")// 是否有权限创建命名空间/集群/分配角色
   public ResponseEntity<PermissionCondition> hasPermission(@PathVariable String appId, @PathVariable String permissionType) {
     PermissionCondition permissionCondition = new PermissionCondition();
 
@@ -89,7 +89,7 @@ public class PermissionController {
     return ResponseEntity.ok().body(permissionCondition);
   }
 
-  @GetMapping("/apps/{appId}/namespaces/{namespaceName}/permissions/{permissionType}")
+  @GetMapping("/apps/{appId}/namespaces/{namespaceName}/permissions/{permissionType}")// 修改/发布命名空间权限
   public ResponseEntity<PermissionCondition> hasPermission(@PathVariable String appId, @PathVariable String namespaceName,
                                                            @PathVariable String permissionType) {
     PermissionCondition permissionCondition = new PermissionCondition();
@@ -113,7 +113,7 @@ public class PermissionController {
     return ResponseEntity.ok().body(permissionCondition);
   }
 
-  @GetMapping("/permissions/root")
+  @GetMapping("/permissions/root")// 是否是超级管理员
   public ResponseEntity<PermissionCondition> hasRootPermission() {
     PermissionCondition permissionCondition = new PermissionCondition();
 
@@ -240,7 +240,7 @@ public class PermissionController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/apps/{appId}/role_users")
+  @GetMapping("/apps/{appId}/role_users")// app master users
   public AppRolesAssignedUsers getAppRoles(@PathVariable String appId) {
     AppRolesAssignedUsers users = new AppRolesAssignedUsers();
     users.setAppId(appId);
@@ -319,7 +319,7 @@ public class PermissionController {
             .stream().map(UserInfo::getUserId).collect(Collectors.toList());
   }
 
-  @GetMapping("/system/role/createApplication/{userId}")
+  @GetMapping("/system/role/createApplication/{userId}")// 是否有创建app权限
   public JsonObject hasCreateApplicationPermission(@PathVariable String userId) {
     JsonObject rs = new JsonObject();
     rs.addProperty("hasCreateApplicationPermission", permissionValidator.hasCreateApplicationPermission(userId));

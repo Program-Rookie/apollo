@@ -16,6 +16,7 @@
  */
 package com.ctrip.framework.apollo.portal.controller;
 
+import com.ctrip.framework.apollo.portal.annotation.ApiOperation;
 import com.google.common.base.Strings;
 import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ public class PrefixPathController {
     this.servletContext = servletContext;
   }
 
+  @ApiOperation("获取项目相对路径")
   @GetMapping("/prefix-path")
   public String getPrefixPath() {
     if (Strings.isNullOrEmpty(prefixPath)) {

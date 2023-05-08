@@ -64,7 +64,7 @@ public class InstanceController {
         return instanceService.getByNamespace(Env.valueOf(env), appId, clusterName, namespaceName, instanceAppId, page, size);
     }
 
-    @GetMapping("/envs/{env}/instances/by-namespace/count")
+    @GetMapping("/envs/{env}/instances/by-namespace/count")//实例总数
     public ResponseEntity<Number> getInstanceCountByNamespace(@PathVariable String env, @RequestParam String appId,
                                                               @RequestParam String clusterName,
                                                               @RequestParam String namespaceName) {

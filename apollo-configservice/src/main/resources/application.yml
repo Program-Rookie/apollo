@@ -48,7 +48,11 @@ eureka:
     healthcheck:
       enabled: true
     eurekaServiceUrlPollIntervalSeconds: 60
+    # 默认值为true，表示Eureka客户端会从注册中心获取最新的服务信息。
+    # 如果该属性被设置为false，则只有在启动时从注册中心获取服务信息，
+    # 并在缓存中保留它们
     fetch-registry: false
+    # 不向注册中心注册自己
     registerWithEureka: false
 
 management:

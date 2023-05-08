@@ -88,6 +88,7 @@ public class DefaultConfigFactory implements ConfigFactory {
       logger.warn(
           "==== Apollo is in local mode! Won't pull configs from remote server for namespace {} ! ====",
           namespace);
+      // local模式，从本地文件中加载
       return new LocalFileConfigRepository(namespace);
     }
     return new LocalFileConfigRepository(namespace, createRemoteConfigRepository(namespace));

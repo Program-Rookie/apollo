@@ -62,6 +62,11 @@ public class SimpleApolloConfigDemo {
     return result;
   }
 
+  /**
+   * 测试客户端获取配置
+   * @param args
+   * @throws IOException
+   */
   public static void main(String[] args) throws IOException {
     SimpleApolloConfigDemo apolloConfigDemo = new SimpleApolloConfigDemo();
     System.out.println(

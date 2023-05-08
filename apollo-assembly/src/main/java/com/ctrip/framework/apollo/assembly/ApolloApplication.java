@@ -36,6 +36,11 @@ public class ApolloApplication {
 
   private static final Logger logger = LoggerFactory.getLogger(ApolloApplication.class);
 
+  /**
+   * 在program arguements输入 --configservice --adminservice -- portal 一次运行三个服务
+   * @param args
+   * @throws Exception
+   */
   public static void main(String[] args) throws Exception {
     /**
      * Common

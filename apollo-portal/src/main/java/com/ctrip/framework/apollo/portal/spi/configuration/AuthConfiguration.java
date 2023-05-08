@@ -305,6 +305,7 @@ public class AuthConfiguration {
   @EnableWebSecurity
   // 启用注解支持
   @EnableGlobalMethodSecurity(prePostEnabled = true)
+  // WebSecurityConfigurerAdapter是SpringSecurity 提供的用于我们扩展自己的配置
   static class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     public static final String USER_ROLE = "user";

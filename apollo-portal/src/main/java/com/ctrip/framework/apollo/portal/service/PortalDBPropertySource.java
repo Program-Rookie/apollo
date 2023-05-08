@@ -34,6 +34,7 @@ import java.util.Objects;
 /**
  * @author Jason Song(song_s@ctrip.com)
  */
+// 容器管理
 @Component
 public class PortalDBPropertySource extends RefreshablePropertySource {
   private static final Logger logger = LoggerFactory.getLogger(PortalDBPropertySource.class);
@@ -51,6 +52,7 @@ public class PortalDBPropertySource extends RefreshablePropertySource {
 
   @Override
   protected void refresh() {
+    // 继承了MapPropertySource实现动态刷新属性值
     Iterable<ServerConfig> dbConfigs = serverConfigRepository.findAll();
 
     for (ServerConfig config: dbConfigs) {

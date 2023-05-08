@@ -70,6 +70,7 @@ public final class ApolloPasswordEncoderFactory {
         encoders);
 
     // todo: adapt the old password, and it should be removed in the next feature version of the 1.9.x
+    // 适配器， 为什么加入了那么多encoders、只选择其中第一个呢
     delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(new PasswordEncoderAdapter(encoders.get(encodingId)));
     return delegatingPasswordEncoder;
   }

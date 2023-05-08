@@ -95,7 +95,7 @@ public class AppController {
     this.additionalUserInfoEnrichService = additionalUserInfoEnrichService;
   }
 
-  @GetMapping
+  @GetMapping//查apps信息、搜索项目下拉列表
   public List<App> findApps(@RequestParam(value = "appIds", required = false) String appIds) {
     if (StringUtils.isEmpty(appIds)) {
       return appService.findAll();
@@ -112,7 +112,7 @@ public class AppController {
     return appService.searchByAppIdOrAppName(query, pageable);
   }
 
-  @GetMapping("/by-owner")
+  @GetMapping("/by-owner")// 查自己所有
   public List<App> findAppsByOwner(@RequestParam("owner") String owner, Pageable page) {
     Set<String> appIds = Sets.newHashSet();
 
@@ -128,7 +128,7 @@ public class AppController {
 
     return appService.findByAppIds(appIds, page);
   }
-
+  // 新增app
   @PreAuthorize(value = "@permissionValidator.hasCreateApplicationPermission()")
   @PostMapping
   public App create(@Valid @RequestBody AppModel appModel) {
@@ -163,7 +163,7 @@ public class AppController {
     publisher.publishEvent(new AppInfoChangedEvent(updatedApp));
   }
 
-  @GetMapping("/{appId}/navtree")
+  @GetMapping("/{appId}/navtree")// 树状列表 环境-集群-
   public MultiResponseEntity<EnvClusterInfo> nav(@PathVariable String appId) {
 
     MultiResponseEntity<EnvClusterInfo> response = MultiResponseEntity.ok();
@@ -189,7 +189,7 @@ public class AppController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/{appId:.+}")
+  @GetMapping("/{appId:.+}")// 左下角信息
   public AppDTO load(@PathVariable String appId) {
     App app = appService.load(appId);
     AppDTO appDto = BeanUtils.transform(AppDTO.class, app);

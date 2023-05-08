@@ -70,6 +70,7 @@ import java.util.function.Function;
 @RequestMapping("/notifications/v2")
 public class NotificationControllerV2 implements ReleaseMessageListener {
   private static final Logger logger = LoggerFactory.getLogger(NotificationControllerV2.class);
+  // key appId+cluster+namespace
   private final Multimap<String, DeferredResultWrapper> deferredResults =
       Multimaps.synchronizedSetMultimap(TreeMultimap.create(String.CASE_INSENSITIVE_ORDER, Ordering.natural()));
   private static final Splitter STRING_SPLITTER =
@@ -109,6 +110,7 @@ public class NotificationControllerV2 implements ReleaseMessageListener {
   public DeferredResult<ResponseEntity<List<ApolloConfigNotification>>> pollNotification(
       @RequestParam(value = "appId") String appId,
       @RequestParam(value = "cluster") String cluster,
+      // key namespace
       @RequestParam(value = "notifications") String notificationsAsString,
       @RequestParam(value = "dataCenter", required = false) String dataCenter,
       @RequestParam(value = "ip", required = false) String clientIp) {
